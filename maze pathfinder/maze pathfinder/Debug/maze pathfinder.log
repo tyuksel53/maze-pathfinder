@@ -1,0 +1,3 @@
+﻿  main.c
+c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(7): warning C4013: 'system' undefined; assuming extern returning int
+  maze pathfinder.vcxproj -> C:\Users\Taha\Desktop\Notes\maze-pathfinder\maze pathfinder\Debug\maze pathfinder.exe
