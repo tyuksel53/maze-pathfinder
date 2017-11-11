@@ -1,3 +1,8 @@
 ﻿  main.c
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(7): warning C4013: 'system' undefined; assuming extern returning int
+c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(59): warning C4013: 'system' undefined; assuming extern returning int
+c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(68): warning C4013: 'srand' undefined; assuming extern returning int
+c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(69): warning C4013: 'malloc' undefined; assuming extern returning int
+c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(81): warning C4013: 'rand' undefined; assuming extern returning int
+c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(215): warning C4047: '=': 'path_t *' differs in levels of indirection from 'int'
+c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(224): warning C4047: '=': 'path *' differs in levels of indirection from 'int'
   maze pathfinder.vcxproj -> C:\Users\Taha\Desktop\Notes\maze-pathfinder\maze pathfinder\Debug\maze pathfinder.exe
