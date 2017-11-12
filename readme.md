@@ -23,4 +23,4 @@ tespiti için yığın yapısı kullanarak labirent içinde dolaşması gerekmek
  - Bulunulan yol ekranda gösterilecek, yolun bulunamaması durumunda “yol yok” mesajı verilecektir.
  - Labirent için grafiksel gösterim öğrencilere bağlıdır. Kullanıcı dostu bir arayüz olması değerlendirmeye etki edecektir.
 
-![Alt text](/screen.png?raw=true "Screenshot")
+![Screenshot](/screen.PNG?raw=true "Screenshot")
