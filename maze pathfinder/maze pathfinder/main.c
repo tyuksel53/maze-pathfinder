@@ -1,6 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <time.h>
+/*
+	date: 12.11.2017
+	author:yuksel algorithm 
+*/
 typedef enum { false, true } bool;
 
 typedef struct path {
@@ -8,8 +12,9 @@ typedef struct path {
 	int ColumnNum;
     struct path * next;
 }path_t;
-// defiantion of static global values
-path_t *head = NULL;
+// --->defination of static global values
+path_t  *head = NULL;
+path_t  *head_control = NULL;
 static int exit = 0;
 
 static int columnSize = 0;
@@ -23,21 +28,21 @@ static int startPointY = -1;
 static int endPointX = -1;
 static int endPointY = -1;
 
-// funciton definations
+// --->defination of static global values end
+
+// --->funciton definations
 int **maze_create(); 
 bool maze_enter_exit_control(int **maze);
 void show_maze(int **maze);
 void find_a_way(int **maze, int currentX, int currentY);
 bool control_path(int currentX,int currentY);
 void add_pathValues(int valueX, int valueY);
+void print_maze_way_out();
+void add_pathValues_Control(int valueX, int valueY);
+// --->function definations end
 
 void main()
 {
-	add_pathValues(1, 2);
-	add_pathValues(2, 5);
-	add_pathValues(3, 6);
-	add_pathValues(4, 7);
-	control_path(0, 0);
 	int ** maze = maze_create();
 	show_maze(maze);
 
@@ -54,8 +59,19 @@ void main()
 			printf("\nWrong !!!!! Entrance point or exit point\n\n");
 		}
 	}
-	
-	//find_a_way(maze, startPointX, startPointY);
+	add_pathValues(startPointX,startPointY);
+	find_a_way(maze, startPointX, startPointY);
+
+	if (exit == 0)
+	{
+		printf("\nThere is no way sorry....");
+	}
+	else
+	{
+		printf("\n---------HERE IS YOUR WAY-----------\n\n");
+		print_maze_way_out(maze);
+	}
+
 	system("PAUSE");
 }
 int **maze_create()
@@ -100,7 +116,7 @@ void show_maze(int	**maze) // displays maze to screen
 }
 bool maze_enter_exit_control(int **maze)//controls the exit and entrance points
 {
-	printf("Please Enter Enterance of the Maze:\nRowNum--> ");
+	printf("\nPlease Enter Enterance of the Maze:\nRowNum--> ");
 	scanf_s("%d", &startPointX);
 	printf("ColumnNum --> ");
 	scanf_s("%d", &startPointY);
@@ -111,7 +127,7 @@ bool maze_enter_exit_control(int **maze)//controls the exit and entrance points
 	scanf_s("%d", &endPointY);
 
 
-	if (startPointX < rowSize && startPointY < rowSize && endPointX < columnSize && endPointY < columnSize)
+	if (startPointX < rowSize && startPointY < columnSize && endPointX < rowSize && endPointY < columnSize)
 	{
 		if (maze[startPointX][startPointY] == 1 && maze[endPointX][endPointY] == 1)
 		{
@@ -128,24 +144,21 @@ bool maze_enter_exit_control(int **maze)//controls the exit and entrance points
 	}
 
 }
-/*void find_a_way(int **maze, int currentX, int currentY)
+void find_a_way(int **maze, int currentX, int currentY)
 {
 	if (currentX == endPointX && currentY == endPointY)
 	{
-		printf("end");
+		//printf("end\n");
 		exit = 1;
 		return;
 	}
 	// go right
 	if (currentY + 1 < columnSize && maze[currentX][currentY + 1] == 1  && exit == 0)
 	{
-		if (currentX == previousX && (currentY+1) == previousY)
+		if ( control_path(currentX,currentY+1,0) )
 		{
-
-		}
-		else
-		{
-			printf("3 ");
+			//printf("(%d,%d) -> (%d,%d)\n", currentX, currentY, currentX, currentY+1);
+			add_pathValues(currentX, currentY+1);
 			find_a_way(maze, currentX, currentY + 1, currentX, currentY);
 		}
 		
@@ -153,76 +166,124 @@ bool maze_enter_exit_control(int **maze)//controls the exit and entrance points
 	// go left
 	if (currentY -1 < columnSize &&  currentY >=0  && maze[currentX][currentY - 1] == 1  && exit == 0)
 	{
-		if (currentX == previousX && (currentY-1) == previousY)
+		if ( control_path(currentX, currentY - 1,0) )
 		{
-
-		}
-		else
-		{
-			printf("4 ");
+			//printf("(%d,%d) -> (%d,%d)\n", currentX, currentY, currentX, currentY - 1);
+			add_pathValues(currentX, currentY - 1);
 			find_a_way(maze, currentX, currentY - 1, currentX, currentY);
 		}
 	}
 	// go down
 	if (currentX + 1 < rowSize && maze[currentX+1][currentY] == 1 && exit == 0)
 	{
-		if ( (currentX+1) == previousX && currentY == previousY)
+		if ( control_path(currentX+1, currentY,0) )
 		{
-
-		}
-		else
-		{
-			printf("2 ");
+			//printf("(%d,%d) -> (%d,%d)\n", currentX, currentY, currentX+1, currentY);
+			add_pathValues(currentX+1, currentY);
 			find_a_way(maze, currentX+1, currentY, currentX, currentY);
 		}
 	}
 	//go up
 	if (currentX - 1 < rowSize &&  currentX - 1 >= 0 && maze[currentX - 1][currentY] == 1 && exit == 0)
 	{
-		if ( (currentX-1) == previousX && currentY == previousY)
+		if ( control_path(currentX-1, currentY,0) )
 		{
-
-		}
-		else
-		{
-			printf("1 ");
+			//printf("(%d,%d) -> (%d,%d)\n", currentX, currentY, currentX-1, currentY);
+			add_pathValues(currentX-1, currentY);
 			find_a_way(maze, currentX-1, currentY, currentX, currentY);
 		}
 	}
-	return;
-}*/
-bool control_path(int currentX, int curretY)
-{
-	path_t *current = head;
-	int i = 1;
-	while (current != NULL) {
-		printf("%d. |%d - %d\n", i, current->RowNum, current->ColumnNum);
-		/*if ( current->ColumnNum == curretY && current->RowNum == currentX)
-		{
-			return false;
-		}*/
-		i++;
-		current = current->next;
+	if (exit == 0)
+	{
+		add_pathValues_Control(currentX, currentY);
 	}
+	return;
+}
+void print_maze_way_out(int **maze)
+{
+	int i, j = 0;
+	for (i = 0; i < rowSize; i++)
+	{
+		for (j = 0; j < columnSize; j++)
+		{
+			printf("%d ", maze[i][j]);
+		}
+		if (i == rowSize / 2)
+		{
+			printf("   ----->     ");
+		}
+		else
+		{
+			printf("              ");
+		}
+		for (j = 0; j < columnSize; j++)
+		{
+			if (control_path(i,j,0) == false)
+			{
+				if (control_path(i, j, 1) == false)
+				{
+					printf("0 ");
+				}
+				else
+				{
+					printf("1 ");
+				}
+				
+			}
+			else
+			{
+				printf("0 ");
+			}
+		}
+		printf("\n");
+	}
+}
+bool control_path(int currentX, int curretY,int type)
+{
+	if (type == 0)
+	{
+		path_t *current = head;
+		//int i = 1;
+		while (current != NULL) {
+			if (current->ColumnNum == curretY && current->RowNum == currentX)
+			{
+				return false;
+			}
+			//printf("%d. | (%d,%d)\n", i, current->RowNum, current->ColumnNum);
+			current = current->next;
+			//i++;
+		}
 
-	return true;
+		return true;
+	}
+	else
+	{
+		path_t *current = head_control;
+		while (current != NULL) {
+			if (current->ColumnNum == curretY && current->RowNum == currentX)
+			{
+				return false;
+			}
+			current = current->next;
+		}
+
+		return true;
+	}
+	
 }
 void add_pathValues(int valueX, int valueY)
 {
-	
-	if (head == NULL)
-	{
-		head = malloc(sizeof(path_t));
-		head->ColumnNum = valueY;
-		head->RowNum = valueY;
-		head->next = NULL;
-		return;
-	}
-	while (head->next != NULL) {
-		head = head->next;
-	}
-	head->next = malloc(sizeof(path_t));
-	head->next->ColumnNum = valueY;
-	head->next->RowNum = valueX;
-	head->next->next = NULL;
+		path_t * firstDot = (path_t *) malloc(sizeof(path_t));
+		firstDot->RowNum = valueX;
+		firstDot->ColumnNum = valueY;
+		firstDot->next = head;
+		head = firstDot;
+}
+void add_pathValues_Control(int valueX, int valueY)
+{
+	path_t * firstDot = (path_t *)malloc(sizeof(path_t));
+	firstDot->RowNum = valueX;
+	firstDot->ColumnNum = valueY;
+	firstDot->next = head_control;
+	head_control = firstDot;
 }
