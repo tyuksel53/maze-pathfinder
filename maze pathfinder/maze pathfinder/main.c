@@ -5,14 +5,20 @@
 	date: 12.11.2017
 	author:yuksel algorithm 
 */
+#define MAX_SIZE 100
 typedef enum { false, true } bool;
-
+typedef struct stack_s
+{
+	int top;
+	int stk[MAX_SIZE];
+}STACK;
 typedef struct path {
     int RowNum;
 	int ColumnNum;
     struct path * next;
 }path_t;
 // --->defination of static global values
+STACK stack;
 path_t  *head = NULL;
 path_t  *head_control = NULL;
 static int exit = 0;
@@ -39,10 +45,15 @@ bool control_path(int currentX,int currentY);
 void add_pathValues(int valueX, int valueY);
 void print_maze_way_out();
 void add_pathValues_Control(int valueX, int valueY);
+void push(int num);
+int  pop();
+void display();
 // --->function definations end
 
 void main()
 {
+	stack.top = - 1; // sets stack top
+
 	int ** maze = maze_create();
 	show_maze(maze);
 
@@ -70,6 +81,7 @@ void main()
 	{
 		printf("\n---------HERE IS YOUR WAY-----------\n\n");
 		print_maze_way_out(maze);
+		display();
 	}
 
 	system("PAUSE");
@@ -146,7 +158,7 @@ bool maze_enter_exit_control(int **maze)//controls the exit and entrance points
 }
 void find_a_way(int **maze, int currentX, int currentY)
 {
-	if (currentX == endPointX && currentY == endPointY)
+	if (currentX == endPointX && currentY == endPointY) // destination
 	{
 		//printf("end\n");
 		exit = 1;
@@ -158,6 +170,7 @@ void find_a_way(int **maze, int currentX, int currentY)
 		if ( control_path(currentX,currentY+1,0) )
 		{
 			//printf("(%d,%d) -> (%d,%d)\n", currentX, currentY, currentX, currentY+1);
+			push(3);
 			add_pathValues(currentX, currentY+1);
 			find_a_way(maze, currentX, currentY + 1, currentX, currentY);
 		}
@@ -169,6 +182,7 @@ void find_a_way(int **maze, int currentX, int currentY)
 		if ( control_path(currentX, currentY - 1,0) )
 		{
 			//printf("(%d,%d) -> (%d,%d)\n", currentX, currentY, currentX, currentY - 1);
+			push(4);
 			add_pathValues(currentX, currentY - 1);
 			find_a_way(maze, currentX, currentY - 1, currentX, currentY);
 		}
@@ -179,6 +193,7 @@ void find_a_way(int **maze, int currentX, int currentY)
 		if ( control_path(currentX+1, currentY,0) )
 		{
 			//printf("(%d,%d) -> (%d,%d)\n", currentX, currentY, currentX+1, currentY);
+			push(2);
 			add_pathValues(currentX+1, currentY);
 			find_a_way(maze, currentX+1, currentY, currentX, currentY);
 		}
@@ -189,6 +204,7 @@ void find_a_way(int **maze, int currentX, int currentY)
 		if ( control_path(currentX-1, currentY,0) )
 		{
 			//printf("(%d,%d) -> (%d,%d)\n", currentX, currentY, currentX-1, currentY);
+			push(1);
 			add_pathValues(currentX-1, currentY);
 			find_a_way(maze, currentX-1, currentY, currentX, currentY);
 		}
@@ -196,6 +212,7 @@ void find_a_way(int **maze, int currentX, int currentY)
 	if (exit == 0)
 	{
 		add_pathValues_Control(currentX, currentY);
+		pop();
 	}
 	return;
 }
@@ -286,4 +303,52 @@ void add_pathValues_Control(int valueX, int valueY)
 	firstDot->ColumnNum = valueY;
 	firstDot->next = head_control;
 	head_control = firstDot;
+}
+void push(int num)
+{
+	if (stack.top == (MAX_SIZE - 1))
+	{
+		printf("Stack is Full\n");
+		return;
+	}
+	else
+	{
+		stack.top = stack.top + 1;
+		stack.stk[stack.top] = num;
+	}
+	return;
+}
+int pop()
+{
+	int num;
+	if (stack.top == -1)
+	{
+		printf("Stack is Empty\n");
+		return;
+	}
+	else
+	{
+		num = stack.stk[stack.top];
+		//printf("poped element is = %dn", stack.stk[stack.top]);
+		stack.top = stack.top - 1;
+	}
+	return(num); // returns poped element
+}
+void display()
+{
+	int i;
+	if (stack.top == -1)
+	{
+		printf("Stack is empty\n");
+		return;
+	}
+	else
+	{
+		printf("The way out way is -> (4-left, 3-right, 2-down,1-up)\n");
+		for (i = 0; i <= stack.top; i++)
+		{
+			printf(" -> %d", stack.stk[i]);
+		}
+	}
+	printf("\n");
 }
