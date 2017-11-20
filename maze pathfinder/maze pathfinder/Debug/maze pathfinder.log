@@ -1,19 +1,6 @@
 ﻿  main.c
 c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(87): warning C4013: 'system' undefined; assuming extern returning int
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(96): warning C4013: 'srand' undefined; assuming extern returning int
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(97): warning C4013: 'malloc' undefined; assuming extern returning int
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(109): warning C4013: 'rand' undefined; assuming extern returning int
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(170): warning C4020: 'control_path': too many actual parameters
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(175): warning C4020: 'find_a_way': too many actual parameters
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(182): warning C4020: 'control_path': too many actual parameters
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(187): warning C4020: 'find_a_way': too many actual parameters
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(193): warning C4020: 'control_path': too many actual parameters
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(198): warning C4020: 'find_a_way': too many actual parameters
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(204): warning C4020: 'control_path': too many actual parameters
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(209): warning C4020: 'find_a_way': too many actual parameters
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(238): warning C4020: 'control_path': too many actual parameters
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(240): warning C4020: 'control_path': too many actual parameters
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(259): warning C4029: declared formal parameter list different from definition
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(327): warning C4033: 'pop' must return a value
-c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(336): warning C4715: 'pop': not all control paths return a value
+c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(97): warning C4013: 'srand' undefined; assuming extern returning int
+c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(98): warning C4013: 'malloc' undefined; assuming extern returning int
+c:\users\taha\desktop\notes\maze-pathfinder\maze pathfinder\maze pathfinder\main.c(110): warning C4013: 'rand' undefined; assuming extern returning int
   maze pathfinder.vcxproj -> C:\Users\Taha\Desktop\Notes\maze-pathfinder\maze pathfinder\Debug\maze pathfinder.exe

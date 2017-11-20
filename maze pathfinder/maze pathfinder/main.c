@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <time.h>
 /*
-	date: 12.11.2017
-	author:yuksel algorithm 
+date: 12.11.2017
+author:yuksel algorithm
 */
 #define MAX_SIZE 100
 typedef enum { false, true } bool;
@@ -13,9 +13,9 @@ typedef struct stack_s
 	int stk[MAX_SIZE];
 }STACK;
 typedef struct path {
-    int RowNum;
+	int RowNum;
 	int ColumnNum;
-    struct path * next;
+	struct path * next;
 }path_t;
 // --->defination of static global values
 STACK stack;
@@ -37,11 +37,11 @@ static int endPointY = -1;
 // --->defination of static global values end
 
 // --->funciton definations
-int **maze_create(); 
+int **maze_create();
 bool maze_enter_exit_control(int **maze);
 void show_maze(int **maze);
 void find_a_way(int **maze, int currentX, int currentY);
-bool control_path(int currentX,int currentY);
+bool control_path(int currentX, int currentY, int type);
 void add_pathValues(int valueX, int valueY);
 void print_maze_way_out();
 void add_pathValues_Control(int valueX, int valueY);
@@ -50,9 +50,9 @@ int  pop();
 void display();
 // --->function definations end
 
-void main()
+int main()
 {
-	stack.top = - 1; // sets stack top
+	stack.top = -1; // sets stack top
 
 	int ** maze = maze_create();
 	show_maze(maze);
@@ -70,7 +70,7 @@ void main()
 			printf("\nWrong !!!!! Entrance point or exit point\n\n");
 		}
 	}
-	add_pathValues(startPointX,startPointY);
+	add_pathValues(startPointX, startPointY);
 	find_a_way(maze, startPointX, startPointY);
 
 	if (exit == 0)
@@ -85,13 +85,14 @@ void main()
 	}
 
 	system("PAUSE");
+	return 0;
 }
 int **maze_create()
 { //creates a matrix based on columsize value and rowsize value and it contains only ones and zeros(randomly genareted)
 	printf("Please Enter the size of row:\n--> ");
-	scanf_s("%d", &rowSize);
+	scanf("%d", &rowSize);
 	printf("Please Enter the size of column:\n--> ");
-	scanf_s("%d", &columnSize);
+	scanf("%d", &columnSize);
 
 	srand(time(NULL));
 	int **maze = (int **)malloc(sizeof(int) * rowSize);
@@ -129,14 +130,14 @@ void show_maze(int	**maze) // displays maze to screen
 bool maze_enter_exit_control(int **maze)//controls the exit and entrance points
 {
 	printf("\nPlease Enter Enterance of the Maze:\nRowNum--> ");
-	scanf_s("%d", &startPointX);
+	scanf("%d", &startPointX);
 	printf("ColumnNum --> ");
-	scanf_s("%d", &startPointY);
+	scanf("%d", &startPointY);
 
 	printf("Please Enter Exit Point of the Maze:\nRowNum--> ");
-	scanf_s("%d", &endPointX);
+	scanf("%d", &endPointX);
 	printf("ColumnNum --> ");
-	scanf_s("%d", &endPointY);
+	scanf("%d", &endPointY);
 
 
 	if (startPointX < rowSize && startPointY < columnSize && endPointX < rowSize && endPointY < columnSize)
@@ -165,48 +166,48 @@ void find_a_way(int **maze, int currentX, int currentY)
 		return;
 	}
 	// go right
-	if (currentY + 1 < columnSize && maze[currentX][currentY + 1] == 1  && exit == 0)
+	if (currentY + 1 < columnSize && maze[currentX][currentY + 1] == 1 && exit == 0)
 	{
-		if ( control_path(currentX,currentY+1,0) )
+		if (control_path(currentX, currentY + 1, 0))
 		{
 			//printf("(%d,%d) -> (%d,%d)\n", currentX, currentY, currentX, currentY+1);
 			push(3);
-			add_pathValues(currentX, currentY+1);
-			find_a_way(maze, currentX, currentY + 1, currentX, currentY);
+			add_pathValues(currentX, currentY + 1);
+			find_a_way(maze, currentX, currentY + 1);
 		}
-		
+
 	}
 	// go left
-	if (currentY -1 < columnSize &&  currentY >=0  && maze[currentX][currentY - 1] == 1  && exit == 0)
+	if (currentY - 1 < columnSize &&  currentY >= 0 && maze[currentX][currentY - 1] == 1 && exit == 0)
 	{
-		if ( control_path(currentX, currentY - 1,0) )
+		if (control_path(currentX, currentY - 1, 0))
 		{
 			//printf("(%d,%d) -> (%d,%d)\n", currentX, currentY, currentX, currentY - 1);
 			push(4);
 			add_pathValues(currentX, currentY - 1);
-			find_a_way(maze, currentX, currentY - 1, currentX, currentY);
+			find_a_way(maze, currentX, currentY - 1);
 		}
 	}
 	// go down
-	if (currentX + 1 < rowSize && maze[currentX+1][currentY] == 1 && exit == 0)
+	if (currentX + 1 < rowSize && maze[currentX + 1][currentY] == 1 && exit == 0)
 	{
-		if ( control_path(currentX+1, currentY,0) )
+		if (control_path(currentX + 1, currentY, 0))
 		{
 			//printf("(%d,%d) -> (%d,%d)\n", currentX, currentY, currentX+1, currentY);
 			push(2);
-			add_pathValues(currentX+1, currentY);
-			find_a_way(maze, currentX+1, currentY, currentX, currentY);
+			add_pathValues(currentX + 1, currentY);
+			find_a_way(maze, currentX + 1, currentY);
 		}
 	}
 	//go up
 	if (currentX - 1 < rowSize &&  currentX - 1 >= 0 && maze[currentX - 1][currentY] == 1 && exit == 0)
 	{
-		if ( control_path(currentX-1, currentY,0) )
+		if (control_path(currentX - 1, currentY, 0))
 		{
 			//printf("(%d,%d) -> (%d,%d)\n", currentX, currentY, currentX-1, currentY);
 			push(1);
-			add_pathValues(currentX-1, currentY);
-			find_a_way(maze, currentX-1, currentY, currentX, currentY);
+			add_pathValues(currentX - 1, currentY);
+			find_a_way(maze, currentX - 1, currentY);
 		}
 	}
 	if (exit == 0)
@@ -235,7 +236,7 @@ void print_maze_way_out(int **maze)
 		}
 		for (j = 0; j < columnSize; j++)
 		{
-			if (control_path(i,j,0) == false)
+			if (control_path(i, j, 0) == false)
 			{
 				if (control_path(i, j, 1) == false)
 				{
@@ -245,7 +246,7 @@ void print_maze_way_out(int **maze)
 				{
 					printf("1 ");
 				}
-				
+
 			}
 			else
 			{
@@ -255,7 +256,7 @@ void print_maze_way_out(int **maze)
 		printf("\n");
 	}
 }
-bool control_path(int currentX, int curretY,int type)
+bool control_path(int currentX, int curretY, int type)
 {
 	if (type == 0)
 	{
@@ -286,15 +287,15 @@ bool control_path(int currentX, int curretY,int type)
 
 		return true;
 	}
-	
+
 }
 void add_pathValues(int valueX, int valueY)
 {
-		path_t * firstDot = (path_t *) malloc(sizeof(path_t));
-		firstDot->RowNum = valueX;
-		firstDot->ColumnNum = valueY;
-		firstDot->next = head;
-		head = firstDot;
+	path_t * firstDot = (path_t *)malloc(sizeof(path_t));
+	firstDot->RowNum = valueX;
+	firstDot->ColumnNum = valueY;
+	firstDot->next = head;
+	head = firstDot;
 }
 void add_pathValues_Control(int valueX, int valueY)
 {
@@ -324,7 +325,7 @@ int pop()
 	if (stack.top == -1)
 	{
 		printf("Stack is Empty\n");
-		return;
+		return 0;
 	}
 	else
 	{
